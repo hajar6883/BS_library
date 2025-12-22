@@ -6,6 +6,7 @@ from math import sqrt
 
 
 class AnalyticGreeks:
+    "Greeks depend on (option, model) — but model contains σ , Greeks object must never cache d1/d2"
     def __init__(self, option, model):
         self.o = option
         self.m = model
@@ -30,6 +31,7 @@ class CallGreeks(AnalyticGreeks):
         return self.o.S * np.exp(-self.m.q * self.o.T) * Normal.pdf(d1) * np.sqrt(self.o.T)
 
     def theta(self):
+        " ! This is annualised theta. In practice, we often quote **per-day** theta"
         d1, d2 = self._d1d2()
         term1 = - (self.o.S * np.exp(-self.m.q * self.o.T) * Normal.pdf(d1) * self.m.sigma) / (2 * np.sqrt(self.o.T))
         term2 = - self.m.q * self.o.S * np.exp(-self.m.q * self.o.T) * Normal.cdf(d1)

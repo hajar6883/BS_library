@@ -10,7 +10,7 @@ class BlackScholesModel:
         self.sigma = sigma
 
     def d1(self, S, K, T ):
-        return (np.log(S/K) + (self.r - self.q + 0.5*self.sigma**2)*T) / self.sigma*sqrt(T)
+        return (np.log(S/K) + (self.r - self.q + 0.5*self.sigma**2)*T) / (self.sigma*sqrt(T))
     
     def d2(self, S, K, T ):
         return self.d1(S, K, T)  - self.sigma*sqrt(T)

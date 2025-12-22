@@ -3,6 +3,8 @@
 from core import EuropeanCall,BlackScholesModel
 from greeks import CallGreeks
 
+
+
 def implied_vol_newton(call, market_price, r, sigma_init=0.2, 
                        max_iter=100, tol=1e-8):
 
