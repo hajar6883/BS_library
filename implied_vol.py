@@ -103,11 +103,10 @@ def find_IV_brent(
 
             s = fb / fa
 
-            if a == c:
-                # secant
+            if a == c: # if only 2 distinct x-values use secant
                 p = 2 * m * s
                 q = 1 - s
-            else:
+            else: #if 3 distinct x-values
                 # inverse quadratic interpolation
                 q = fa / fc
                 r_ = fb / fc

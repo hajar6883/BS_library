@@ -1,3 +1,4 @@
+#core.py
 from scipy.stats import norm as Normal  # Normal distributions helpers 
 import numpy as np
 from math import sqrt
