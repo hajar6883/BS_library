@@ -1,17 +1,17 @@
 
 import numpy as np
 from scipy.interpolate import RectBivariateSpline
-from core import BlackScholesModel
+from BS import BlackScholesModel
 
 
 def prepare_IV_grid(market_surface):
     """
     Converts market_surface dict into strike/maturity grids.
     
-    Input:
+    In
         market_surface : {expiry: {strike: IV}}
     
-    Output:
+    Outs:
         K  - sorted strikes (1D array)
         T  - maturity index (1D array)
         Z  - IV grid [T x K] with NaNs where missing

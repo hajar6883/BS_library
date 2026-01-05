@@ -5,19 +5,21 @@ from math import sqrt
 
 
 class BlackScholesModel:
-    def __init__(self, r, q=0):
+    def __init__(self, r, sigma, q=0):
         self.r = r
         self.q = q
+        self.sigma = sigma
 
-    # -----------------------------------
-    # d1, d2 now always depend on sigma
-    # -----------------------------------
-    def d1(self, S, K, T, sigma):
-        return (np.log(S/K) + (self.r - self.q + 0.5*sigma**2)*T) / (sigma*np.sqrt(T))
+
     
-    def d2(self, S, K, T, sigma):
-        return self.d1(S, K, T, sigma) - sigma*np.sqrt(T)
-
+    def d1(self, S, K, T):
+        return (np.log(S/K) + (self.r - self.q + 0.5*self.sigma**2)*T) / (self.sigma*np.sqrt(T))
+    
+    def d2(self, S, K, T):
+        return self.d1(S, K, T) - self.sigma*np.sqrt(T)
+    #  greeks helper
+    def d1d2(self, S,K,T):
+        return self.d1(S,K,T), self.d2(S,K,T)
 
     # some pricing methods temporal just for the Local Vol workflow (will update the pricing scheme once implemented the one exotic ones ..??)
     
@@ -31,9 +33,7 @@ class BlackScholesModel:
         d1 = self.d1(S,K,T,sigma); d2 = self.d2(S,K,T,sigma)
         return np.exp(-self.r*T)*K*Normal.cdf(-d2) - np.exp(-self.q*T)*S*Normal.cdf(-d1)
 
-    #  greeks helper
-    def d1d2(self, S,K,T,sigma):
-        return self.d1(S,K,T,sigma), self.d2(S,K,T,sigma)
+   
 
     
     

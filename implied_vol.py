@@ -1,7 +1,7 @@
 #Root-finding methods to invert the pricing formula.
 
 import numpy as np 
-from core import BlackScholesModel
+from BS import BlackScholesModel
 from greeks import CallGreeks
 
 
