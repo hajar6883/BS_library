@@ -20,28 +20,6 @@ Generic Brent inverter
         ↓
 Implied volatility"""
 
-def implied_vol_from_price(
-    price_fn,
-    market_price,
-    vol_lo=1e-8,
-    vol_hi=5.0,
-    tol=1e-6
-):
-    """
-    Generic implied volatility inversion using Brent's method.
-
-    Parameters
-    ----------
-    price_fn : callable
-        Function of volatility: price_fn(vol) -> price
-    market_price : float
-        Observed option price
-    """
-    def f(vol):
-        return price_fn(vol) - market_price
-
-    return brentq(f, vol_lo, vol_hi, xtol=tol)
-
 
 def heston_iv_surface_on_m_grid(
         spot,

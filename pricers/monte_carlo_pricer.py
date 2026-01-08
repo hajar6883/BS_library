@@ -1,7 +1,7 @@
 import numpy as np 
 from scipy.stats import norm
-from mc_engine import simulate_paths
-from control_variates import control_variate_correction
+from pricers.mc_engine import simulate_paths
+from pricers.control_variates import control_variate_correction
 
 
 

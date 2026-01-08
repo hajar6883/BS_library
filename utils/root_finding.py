@@ -1,4 +1,4 @@
-# Root-finding methods to invert the pricing formula.
+# Root-finding methods to invert the pricing formula : BS(sigma) - market_price
 
 import numpy as np 
 from models.black_scholes import BlackScholesModel
@@ -7,7 +7,7 @@ from scipy.optimize import brentq
 
 
 
-def find_IV_dichotomic( S,K,T, market_price, r,q, iv_low=1e-6, iv_high=5.0, tol=1e-6, cp="call"):
+def find_IV_dichotomic( S,K,T, market_price, r,q=0, iv_low=1e-6, iv_high=5.0, tol=1e-6, cp="call"):
 
     def price_diff(iv):
         model = BlackScholesModel(r=r, sigma=iv, q=q)
@@ -43,7 +43,6 @@ def find_IV_newton(S,K,T, market_price, r,q, init_guess,
                            max_iter=50, vol_tol=1e-6, price_tol=1e-8, cp="call"):
 
     iv = init_guess
-    r = 0.05
 
     for _ in range(max_iter):
         model = BlackScholesModel(r=r, sigma=iv, q=q)
@@ -73,5 +72,27 @@ def find_IV_newton(S,K,T, market_price, r,q, init_guess,
     return iv
 
 
+#brent wrapper :)
 
+def implied_vol_from_price(
+    price_fn,
+    market_price,
+    vol_lo=1e-8,
+    vol_hi=5.0,
+    tol=1e-6
+):
+    """
+    Generic implied volatility inversion using Brent's method.
+
+    Parameters
+    ----------
+    price_fn : callable
+        Function of volatility: price_fn(vol) -> price
+    market_price : float
+        Observed option price
+    """
+    def f(vol):
+        return price_fn(vol) - market_price
+
+    return brentq(f, vol_lo, vol_hi, xtol=tol)
 

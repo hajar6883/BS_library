@@ -1,22 +1,44 @@
-This is a pricing library with modules for valuing European vanilla options using the Black–Scholes–Merton closed-form formula. We then extend the framework to price exotic derivatives using Monte Carlo or automatic differentiation.
+# Equity Options: Pricing & Volatility Calibration
+## Overview
+This project is a modular framework for pricing and calibrating equity options, with a strong focus on volatility modeling.
 
-This module is essential because it provides a benchmark price for Monte Carlo convergence, analytical Greeks to compare with numerical Greeks, and a control variate for Monte Carlo variance reduction.
+It combines analytic pricing, Monte Carlo simulation, volatility surface construction, and model calibration, and is designed to be extensible to multiple volatility dynamics (local, stochastic, and econometric).
+The codebase evolves from a prototype into a structured research framework, emphasizing:
+- clean separation between models, numerics, and data
+- reproducible Monte Carlo experiments
+- realistic calibration and stress-testing workflows (on-going)
 
+## Core features:
+- Black–Scholes analytic pricing
+- Monte Carlo pricers with variance-reduction techniques
+- Stochastic Volatility models
+- Market implied-volatility surface construction
+- Model-to-market comparison and surface error diagnostics
 
-## Quick overview 
-```text
-pricing_engine/
-├── core/
-│   └── Black–Scholes model (closed-form pricing)
-│   
+## Quick layout 
+equity-options-pricing-vol-calibration/
+│
+├── models/
+│   ├── black_scholes.py        # Black–Scholes analytic model
+│   ├── black76.py              # Black–76 pricing (forward-based)
+│   ├── heston.py               # Heston model (CF + MC simulation)
+│   └── local_vol.py            # Dupire local volatility construction
+│
+├── pricers/
+│   └── monte_carlo_pricer.py   # Generic Monte Carlo pricing engine
+│
 ├── greeks/
-│   └── analytical_greeks (Delta, Gamma, Vega, …)
-├── implied_vol/
-│   └── root-finding (Bisection, Newton, Brent)
-├── monte_carlo_pricer/
-│   ├── GBM path simulator
-│   ├── Variance reduction (Antithetic, Control variate)
-│   └── Monte Carlo pricer + diagnostics
-└── notebooks/
-    └── demos
-```
+│   └── bs_greeks.py            # Analytic Greeks (Black–Scholes)
+│
+├── surfaces/
+│   ├── market_iv_surface.py    # Market IV surface construction & interpolation
+│   └── model_iv_surface.py     # Model-implied IV surfaces (Heston CF / MC)
+│
+├── utils/
+│   └── root_finding.py         # Generic numerical solvers (Brent, etc.)
+│
+├── experiments/
+│   ├── notebooks/              # Exploratory and validation notebooks
+│   └── scripts/                # Reproducible experiment scripts
+│
+└── README.md
