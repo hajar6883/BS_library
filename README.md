@@ -16,6 +16,7 @@ The codebase evolves from a prototype into a structured research framework, emph
 - Model-to-market comparison and surface error diagnostics
 
 ## Quick layout 
+```text
 equity-options-pricing-vol-calibration/
 │
 ├── models/
@@ -42,3 +43,6 @@ equity-options-pricing-vol-calibration/
 │   └── scripts/                # Reproducible experiment scripts
 │
 └── README.md
+
+
+```
